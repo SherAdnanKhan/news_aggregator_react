@@ -1,0 +1,36 @@
+.personalized-feed {
+    padding: 20px;
+}
+
+.preferences-form {
+    margin-bottom: 20px;
+}
+
+.select-group {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.category-select,
+.source-select {
+    flex-grow: 1;
+}
+
+.submit-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+}
+
+.loading-indicator,
+.error-message {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.error-message {
+    color: red;
+}

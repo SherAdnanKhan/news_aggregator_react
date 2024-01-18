@@ -1,0 +1,45 @@
+.article-search-form {
+    margin-bottom: 20px;
+}
+.w-200{
+    width: 200px !important;
+}
+
+.search-fields {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.search-input,
+.search-select,
+.search-date-picker {
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.search-select .select__control {
+    /* Specific styles for react-select */
+    display: block;
+}
+
+.search-date-picker input {
+    max-width: 200px; /* Adjust based on your date picker design */
+}
+
+.search-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Add hover effect for the search button */
+.search-button:hover {
+    background-color: #0056b3;
+}
