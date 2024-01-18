@@ -8,7 +8,7 @@ const LoginForm = ({ onLogin, isAuthenticated }) => {
         email: '',
         password: ''
     });
-    const [error, setError] = useState('');
+    const [errors, setErrors] = useState('');
     const navigate = useNavigate();
 
     if (isAuthenticated) {
@@ -26,11 +26,11 @@ const LoginForm = ({ onLogin, isAuthenticated }) => {
             onLogin(response?.data?.token, response?.data?.user);
             navigate('/feed');
         } catch (error) {
-            console.log(error)
+            console.log(error.response)
             if (error.response && error.response.data) {
-                setError(error.response.data.error || 'An error occurred');
+                setErrors(error.response.data.errors || error.response.data);
             } else {
-                setError('An error occurred');
+                setErrors(error?.response);
             }
         }
 
@@ -41,39 +41,6 @@ const LoginForm = ({ onLogin, isAuthenticated }) => {
     };
 
     return (
-        // <div className="container">
-        //     <div className="row justify-content-center">
-        //         <div className="col-md-6">
-        //             <form onSubmit={handleSubmit} className="mt-5">
-        //                 <div className="mb-3">
-        //                     <label htmlFor="email" className="form-label">Email</label>
-        //                     <input
-        //                         type="email"
-        //                         className="form-control"
-        //                         id="email"
-        //                         name="email"
-        //                         value={credentials.email}
-        //                         onChange={handleChange}
-        //                     />
-        //                 </div>
-        //                 <div className="mb-3">
-        //                     <label htmlFor="password" className="form-label">Password</label>
-        //                     <input
-        //                         type="password"
-        //                         className="form-control"
-        //                         id="password"
-        //                         name="password"
-        //                         value={credentials.password}
-        //                         onChange={handleChange}
-        //                     />
-        //                 </div>
-        //                 {error && <div className="alert alert-danger">{error}</div>}
-        //                 <button type="submit" className="btn btn-primary">Login</button>
-        //                 <button type="button" className="btn btn-secondary ml-2" onClick={navigateToRegister}>Register</button>
-        //             </form>
-        //         </div>
-        //     </div>
-        // </div>
         <div className="login-page-one bg-light">
             <Container>
                 <Row>
@@ -92,38 +59,48 @@ const LoginForm = ({ onLogin, isAuthenticated }) => {
                                                 <Col md={12} >
                                                     <label>Email<span className="text-danger">*</span></label>
                                                     <div className="input-group">
-                                                        <div className="input-group-text"><i class="ri-mail-line"></i></div>
-                                                        {/* <input type="email" className="form-control" value={credentials.email} onChange={handleChange} placeholder="Enter Email"/> */}
+                                                        <div className="input-group-text"><i className="ri-mail-line"></i></div>
                                                         <input
                                                             type="email"
-                                                            className="form-control"
+                                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                                             id="email"
                                                             name="email"
                                                             value={credentials.email}
                                                             onChange={handleChange}
                                                             placeholder="Enter Email"
                                                         />
+                                                        <div className={`invalid-feedback ${errors.email ? 'd-block' : ''}`}>
+                                                            {errors.email && errors.email.join(', ')}
+                                                        </div>
                                                     </div>
                                                 </Col>
                                                 <Col md={12} >
                                                     <label>Password<span className="text-danger">*</span></label>
                                                     <div className="input-group">
-                                                        <div className="input-group-text"><i class="ri-key-line"></i></div>
-                                                        {/* <input type="text" className="form-control" placeholder="Enter Password"/> */}
+                                                        <div className="input-group-text"><i className="ri-key-line"></i></div>
                                                         <input
                                                             type="password"
-                                                            className="form-control"
+                                                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                                             id="password"
                                                             name="password"
                                                             value={credentials.password}
                                                             onChange={handleChange}
                                                             placeholder="Enter Password"
                                                         />
+                                                        <div className={`invalid-feedback ${errors.password ? 'd-block' : ''}`}>
+                                                            {errors.password && errors.password.join(', ')}
+                                                        </div>
                                                     </div>
                                                 </Col>
-
+                                                <Col lg={12}>
+                                                    {errors.error && (
+                                                        <div className="alert alert-danger" role="alert">
+                                                            {errors.error}
+                                                        </div>
+                                                    )}
+                                                </Col>
                                                 <Col md={12}>
-                                                    <a onClick={navigateToRegister} className="float-end text-primary">Register</a>
+                                                    <p className="mb-0">Don't have an account? <a href="#" onClick={navigateToRegister} className="text-primary">Register</a></p>
                                                 </Col>
                                                 <Col lg={12}>
                                                     <Button type="submit" className="btn btn-primary px-4 float-end mt-4">login</Button>
@@ -134,7 +111,7 @@ const LoginForm = ({ onLogin, isAuthenticated }) => {
                                 </Col>
                                 <Col md={5} className="ps-0 d-none d-md-block">
                                     <div className="form-right h-100 bg-primary text-white text-center pt-5">
-                                    <i class="ri-survey-line"></i>
+                                        <i className="ri-survey-line"></i>
                                         <h2 className="fs-1">Welcome Back!!!</h2>
                                     </div>
                                 </Col>

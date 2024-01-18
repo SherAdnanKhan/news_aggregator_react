@@ -4,6 +4,7 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import "../assets/preferencesStyle.css";
 import MultiSelect from "react-select";
+import { Container, Row, Col, Card, Form, Button } from 'react-bootstrap';
 
 const Preferences = () => {
     const [sources, setSources] = useState([]);
@@ -57,60 +58,65 @@ const Preferences = () => {
     };
 
     return (
-        <div className="preferences-container">
-            <h2 className="preferences-header">Preferences</h2>
-            <form onSubmit={handleSubmit}>
-                <div className="preferences-section mb-3">
-                    <h3>Sources</h3>
-                    <div className="form-group">
-                        {sources.map(source => (
-                            <div key={source.id} className="form-check">
-                                <input
-                                    type="checkbox"
-                                    id={`source-${source.id}`}
-                                    className="form-check-input"
-                                    checked={selectedSources.includes(source.id)}
-                                    onChange={() => handleSourceChange(source.id)}
-                                />
-                                <label className="form-check-label" htmlFor={`source-${source.id}`}>{source.name}</label>
-                            </div>
-                        ))}
-                    </div>
-                </div>
-                <div className="preferences-section mb-3">
-                    <h3>Author</h3>
-                    <MultiSelect
-                        value={selectedAuthors}
-                        isMulti
-                        name="select"
-                        options={authors}
-                        className="basic-multi-select"
-                        placeholder="Select Authors"
-                        classNamePrefix="select"
-                        onChange={(selectedOptions) => {
-                            setSelectedAuthors(selectedOptions ? selectedOptions.map(option => ({ value: option.value, label: option.label })) : []);
-                        }}
-                    />
-
-                </div>
-                <div className="preferences-section mb-3">
-                    <h3>Categories</h3>
-                    <MultiSelect
-                        options={categories}
-                        isMulti
-                        className="basic-multi-select"
-                        name="select"
-                        classNamePrefix="select"
-                        placeholder="Select Categories"
-                        value={selectedCategories}
-                        onChange={(selectedOptions) => {
-                            setSelectedCategories(selectedOptions ? selectedOptions.map(option => ({ value: option.value, label: option.label })) : []);
-                        }} />
-                </div>
-                <button type="submit" className="submit-button">Save Preferences</button>
-            </form>
-            <ToastContainer autoClose={5000} hideProgressBar={false} newestOnTop={false} closeOnClick rtl={false} pauseOnFocusLoss draggable pauseOnHover />
-        </div>
+        <Container className="preferences-container my-4">
+            <Row>
+                <Col md={{ span: 8, offset: 2 }}>
+                    <Card>
+                        <Card.Header>
+                            <h2 className="preferences-header">Preferences</h2>
+                        </Card.Header>
+                        <Card.Body>
+                            <Form onSubmit={handleSubmit}>
+                                <div className="preferences-section mb-3">
+                                    <h3>Sources</h3>
+                                    {sources.map(source => (
+                                        <Form.Check
+                                            type="checkbox"
+                                            id={`source-${source.id}`}
+                                            label={source.name}
+                                            checked={selectedSources.includes(source.id)}
+                                            onChange={() => handleSourceChange(source.id)}
+                                            key={source.id}
+                                        />
+                                    ))}
+                                </div>
+                                <div className="preferences-section mb-3">
+                                    <h3>Authors</h3>
+                                    <MultiSelect
+                                        value={selectedAuthors}
+                                        isMulti
+                                        name="select"
+                                        options={authors}
+                                        className="basic-multi-select"
+                                        placeholder="Select Authors"
+                                        classNamePrefix="select"
+                                        onChange={(selectedOptions) => {
+                                            setSelectedAuthors(selectedOptions ? selectedOptions.map(option => ({ value: option.value, label: option.label })) : []);
+                                        }}
+                                    />
+                                </div>
+                                <div className="preferences-section mb-3">
+                                    <h3>Categories</h3>
+                                    <MultiSelect
+                                        options={categories}
+                                        isMulti
+                                        className="basic-multi-select"
+                                        name="select"
+                                        classNamePrefix="select"
+                                        placeholder="Select Categories"
+                                        value={selectedCategories}
+                                        onChange={(selectedOptions) => {
+                                            setSelectedCategories(selectedOptions ? selectedOptions.map(option => ({ value: option.value, label: option.label })) : []);
+                                        }} />
+                                </div>
+                                <Button type="submit" variant="primary" className="submit-button">Save Preferences</Button>
+                            </Form>
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
+            <ToastContainer autoClose={5000} />
+        </Container>
     );
 };
 

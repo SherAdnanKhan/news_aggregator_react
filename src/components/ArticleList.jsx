@@ -9,9 +9,9 @@ const ArticleList = ({ articles, paginationInfo, handlePageClick }) => {
             <div className="article-list">
                 <Row>
                     {articles?.map(article => (
-                        <Col md={4}>
-                            <div key={article.id} className="article-item">
-                                <ArticalCard key={article.id} article={article} />
+                        <Col key={article.id} md={4}>
+                            <div className="article-item">
+                                <ArticalCard article={article} />
                             </div>
                         </Col>
                     ))}

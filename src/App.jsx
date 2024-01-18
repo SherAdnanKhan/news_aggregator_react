@@ -69,12 +69,12 @@ const App = () => {
                 <div className="loader"></div>
             </div>
         );
-    }    
+    }
     return (
         <Router>
             <Navigation isAuthenticated={isAuthenticated} onLogout={handleLogout} />
             <Routes>
-                <Route path="/" element={<ArticlesPage title={'Feed'} apiUrl={'http://localhost:8000/api/articles'}/>} />
+                <Route path="/" element={<ArticlesPage title={'Feed'} apiUrl={'http://localhost:8000/api/articles'} />} />
                 <Route path="/login" element={<LoginComponent onLogin={handleLogin} isAuthenticated={isAuthenticated} />} />
                 <Route path="/register" element={<RegistrationForm />} />
                 <Route path="/feed" element={isAuthenticated ? <ArticlesPage title={'Personalized Feed'} apiUrl={'http://localhost:8000/api/feed'} user={user} /> : <Navigate to="/login" />} />

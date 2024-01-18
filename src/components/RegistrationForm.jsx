@@ -15,6 +15,9 @@ const RegistrationForm = () => {
 
     const handleChange = (e) => {
         setUserData({ ...userData, [e.target.name]: e.target.value });
+        if (errors[e.target.name]) {
+            setErrors({ ...errors, [e.target.name]: null });
+        }
     };
 
     const handleSubmit = async (e) => {
@@ -27,70 +30,11 @@ const RegistrationForm = () => {
         }
     };
 
+    const navigateToLogin = () => {
+        navigate('/login');
+    };
+
     return (
-        // <div className="container mt-5">
-        //     <div className="row">
-        //         <div className="col-md-6 offset-md-3">
-        //             <h2 className="mb-4">Register</h2>
-        //             <form onSubmit={handleSubmit}>
-        //                 <div className="form-group">
-        //                     <input
-        //                         type="text"
-        //                         name="name"
-        //                         placeholder="Name"
-        //                         value={userData.name}
-        //                         onChange={handleChange}
-        //                         className="form-control"
-        //                     />
-        //                 </div>
-        //                 <div className="form-group">
-        //                     <input
-        //                         type="email"
-        //                         name="email"
-        //                         placeholder="Email"
-        //                         value={userData.email}
-        //                         onChange={handleChange}
-        //                         className="form-control"
-        //                     />
-        //                 </div>
-        //                 <div className="form-group">
-        //                     <input
-        //                         type="password"
-        //                         name="password"
-        //                         placeholder="Password"
-        //                         value={userData.password}
-        //                         onChange={handleChange}
-        //                         className="form-control"
-        //                     />
-        //                 </div>
-        //                 <div className="form-group">
-        //                     <input
-        //                         type="password"
-        //                         name="password_confirmation"
-        //                         placeholder="Confirm Password"
-        //                         value={userData.password_confirmation}
-        //                         onChange={handleChange}
-        //                         className="form-control"
-        //                     />
-        //                 </div>
-        //                 {Object.keys(errors).length > 0 && (
-        //                     <div className="alert alert-danger">
-        //                         {Object.entries(errors).map(([key, value]) => (
-        //                             <p key={key}>{value}</p>
-        //                         ))}
-        //                     </div>
-        //                 )}
-        //                 <button type="submit" className="btn btn-primary">Register</button>
-        //                 <button 
-        //                     type="button" 
-        //                     className="btn btn-link" 
-        //                     onClick={() => navigate('/login')}>
-        //                     Back to Login
-        //                 </button>
-        //             </form>
-        //         </div>
-        //     </div>
-        // </div>
         <div className="login-page-one bg-light">
             <Container>
                 <Row>
@@ -109,61 +53,74 @@ const RegistrationForm = () => {
                                                 <Col md={12} >
                                                     <label>Name<span className="text-danger">*</span></label>
                                                     <div className="input-group">
-                                                        <div className="input-group-text"><i class="ri-user-line"></i></div>
+                                                        <div className="input-group-text"><i className="ri-user-line"></i></div>
                                                         <input
                                                             type="text"
                                                             name="name"
+                                                            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
                                                             placeholder="Name"
                                                             value={userData.name}
                                                             onChange={handleChange}
-                                                            className="form-control"
                                                         />
+                                                        <div className={`invalid-feedback ${errors.name ? 'd-block' : ''}`}>
+                                                            {errors.name && errors.name.join(', ')}
+                                                        </div>
                                                     </div>
                                                 </Col>
                                                 <Col md={12} >
                                                     <label>Email<span className="text-danger">*</span></label>
                                                     <div className="input-group">
-                                                        <div className="input-group-text"><i class="ri-mail-line"></i></div>
+                                                        <div className="input-group-text"><i className="ri-mail-line"></i></div>
                                                         <input
                                                             type="email"
                                                             name="email"
                                                             placeholder="Email"
                                                             value={userData.email}
                                                             onChange={handleChange}
-                                                            className="form-control"
+                                                            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
                                                         />
+                                                        <div className={`invalid-feedback ${errors.email ? 'd-block' : ''}`}>
+                                                            {errors.email && errors.email.join(', ')}
+                                                        </div>
                                                     </div>
                                                 </Col>
                                                 <Col md={12} >
                                                     <label>Password<span className="text-danger">*</span></label>
                                                     <div className="input-group">
-                                                        <div className="input-group-text"><i class="ri-key-line"></i></div>
+                                                        <div className="input-group-text"><i className="ri-key-line"></i></div>
                                                         <input
                                                             type="password"
                                                             name="password"
                                                             placeholder="Password"
                                                             value={userData.password}
                                                             onChange={handleChange}
-                                                            className="form-control"
+                                                            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
                                                         />
+                                                        <div className={`invalid-feedback ${errors.password ? 'd-block' : ''}`}>
+                                                            {errors.password && errors.password.join(', ')}
+                                                        </div>
                                                     </div>
                                                 </Col>
                                                 <Col md={12} >
                                                     <label>Confirm Password<span className="text-danger">*</span></label>
                                                     <div className="input-group">
-                                                        <div className="input-group-text"><i class="ri-lock-line"></i></div>
+                                                        <div className="input-group-text"><i className="ri-lock-line"></i></div>
                                                         <input
                                                             type="password"
                                                             name="password_confirmation"
                                                             placeholder="Confirm Password"
                                                             value={userData.password_confirmation}
                                                             onChange={handleChange}
-                                                            className="form-control"
+                                                            className={`form-control ${errors.password_confirmation ? 'is-invalid' : ''}`}
                                                         />
+                                                    </div>
+                                                    <div className={`invalid-feedback ${errors.password_confirmation ? 'd-block' : ''}`}>
+                                                        {errors.password_confirmation && errors.password_confirmation.join(', ')}
                                                     </div>
                                                 </Col>
 
                                                 <Col md={12}>
+                                                    <p className="mb-0">Already have an account? <a href='#' onClick={navigateToLogin} className="text-primary cursor-pointer">Login</a></p>
                                                 </Col>
                                                 <Col lg={12}>
                                                     <Button type="submit" className="btn btn-primary px-4 float-end mt-4">Register</Button>
@@ -174,7 +131,7 @@ const RegistrationForm = () => {
                                 </Col>
                                 <Col md={5} className="ps-0 d-none d-md-block">
                                     <div className="form-right h-100 bg-primary text-white text-center pt-5">
-                                        <i class="ri-survey-line"></i>
+                                        <i className="ri-survey-line"></i>
                                         <h2 className="fs-1">Welcome Back!!!</h2>
                                     </div>
                                 </Col>
